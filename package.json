@@ -1,0 +1,22 @@
+{
+  "name": "online-store",
+  "version": "1.0.0",
+  "description": "app:前端文件夹\r lib:框架需要的lib包\r src:后端文件夹\r tests:后端测试文件夹",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuban12315/onlineStore.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuban12315/onlineStore/issues"
+  },
+  "homepage": "https://github.com/yuban12315/onlineStore#readme"
+}
