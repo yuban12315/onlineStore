@@ -1,13 +1,16 @@
 package Controller;
 
 import DAO.impl.UserDAOImpl;
+import Model.Goods;
+import Service.GoodsService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import utils.Message;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
@@ -24,4 +27,20 @@ public class GoodsCtrl {
         message.setMsg(""+userDAO.getCount());
         return Message.messageToMap(message);
     }
+
+    @RequestMapping(value = "/getList/{type}/{page}",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<Goods> getGoodList(@PathVariable String type,@PathVariable int page){
+        GoodsService goodsService=new GoodsService();
+        return goodsService.getGoodsList(type,page);
+    }
+
+    @RequestMapping(value = "/getDetail/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public Goods getGoodsDetail(@PathVariable int id){
+       GoodsService goodsService=new GoodsService();
+       return goodsService.getGoodDetail(id);
+    }
+
+
 }

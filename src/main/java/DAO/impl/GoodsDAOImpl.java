@@ -3,6 +3,7 @@ package DAO.impl;
 import DAO.MongoDB;
 import DAO.goodsDAO;
 import Model.Goods;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import org.bson.Document;
@@ -54,16 +55,32 @@ public class GoodsDAOImpl implements goodsDAO {
     }
 
     @Override
-    public List<Goods> findAll(Map<String, Object> params) {
+    public ArrayList<Goods> findAll(Map<String, Object> params) {
+        /*page ,type*/
         String collectionName = "goods";
         MongoCollection<Document> collection = MongoDB.getCollection(collectionName);
-        String key = Common.getKey(params);
+        String type;
+        int page;
+        try {
+            type = params.get("type").toString();
+            page = Integer.parseInt(params.get("page").toString());
+            if (page < 0) return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
         MongoCursor<Document> docs;
-        List<Goods> list = new ArrayList<Goods>();
-        if (key == null) {
-            docs = collection.find().iterator();
+        ArrayList<Goods> list = new ArrayList<Goods>();
+//        if (key == null) {
+//            docs = collection.find().iterator();
+//        } else {
+//            docs = collection.find(eq(key, params.get(key))).iterator();
+//        }
+        docs = collection.find().iterator();
+        if (type.equals("all") || type.equals("All") || type.equals("ALL")) {
+            docs = collection.find().skip(page * 10).sort(new BasicDBObject()).limit(10).iterator();
         } else {
-            docs = collection.find(eq(key, params.get(key))).iterator();
+            docs = collection.find(eq("type", type)).skip(page * 10).sort(new BasicDBObject()).limit(10).iterator();
         }
         Document document;
         while (docs.hasNext()) {
@@ -75,6 +92,8 @@ public class GoodsDAOImpl implements goodsDAO {
             goods.setPicture(document.getString("picture"));
             goods.setAssort(document.getString("assort"));
             goods.setDesc(document.getString("desc"));
+            goods.setId(document.getInteger("id"));
+            goods.setOwner(document.getString("owner"));
             list.add(goods);
         }
         return list;
@@ -101,12 +120,12 @@ public class GoodsDAOImpl implements goodsDAO {
         String collectionName = "goods";
         MongoCollection<Document> collection = MongoDB.getCollection(collectionName);
 
-        String key=Common.getKey(params);
+        String key = Common.getKey(params);
 
-        if(key==null){
+        if (key == null) {
             collection.drop();
-        }else {
-            collection.findOneAndDelete(eq(key,params.get(key)));
+        } else {
+            collection.findOneAndDelete(eq(key, params.get(key)));
         }
     }
 

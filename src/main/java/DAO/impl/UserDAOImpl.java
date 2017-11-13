@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import utils.Common;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,14 +35,15 @@ public class UserDAOImpl implements userDAO {
         document = new Document("username", object.getUsername());
         document.append("password", object.getUsername());
 
-        collection.updateOne(eq("username",object.getUsername()),new Document("$set",document));
+        collection.updateOne(eq("username", object.getUsername()), new Document("$set", document));
 
     }
 
     @Override
-    public List<User> findAll(Map<String, Object> params) {
+    public ArrayList<User> findAll(Map<String, Object> params) {
 //        String collectionName = "uses";
 //        MongoCollection<Document> collection = MongoDB.getCollection(collectionName);
+
         return null;
     }
 
@@ -56,14 +58,14 @@ public class UserDAOImpl implements userDAO {
         String collectionName = "users";
         MongoCollection<Document> collection = MongoDB.getCollection(collectionName);
 
-        String key= Common.getKey(params);
+        String key = Common.getKey(params);
 
-        Document document=collection.find(eq(key,params.get(key))).first();
+        Document document = collection.find(eq(key, params.get(key))).first();
 
-        if(document==null){
+        if (document == null) {
             return null;
         }
-        User object=new User();
+        User object = new User();
         object.setUsername(document.getString("username"));
         object.setPassword(document.getString("password"));
         object.setType(document.getString("type"));
