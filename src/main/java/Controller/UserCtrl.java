@@ -19,11 +19,11 @@ import java.util.Map;
 @RequestMapping(value = "/user")
 public class UserCtrl {
 
-    @RequestMapping(value = "/hello")
-    @ResponseBody
-    public String hello() {
-        return "hello";
-    }
+//    @RequestMapping(value = "/hello")
+//    @ResponseBody
+//    public String hello() {
+//        return "hello";
+//    }
 
 
     //map array to json list success√

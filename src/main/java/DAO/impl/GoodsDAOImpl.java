@@ -110,5 +110,11 @@ public class GoodsDAOImpl implements goodsDAO {
         }
     }
 
+    @Override
+    public int getCount() {
+        String collectionName = "goods";
+        MongoCollection<Document> collection = MongoDB.getCollection(collectionName);
 
+        return (int) collection.count();
+    }
 }

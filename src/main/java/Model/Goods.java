@@ -69,6 +69,16 @@ public class Goods {
         this.id = id;
     }
 
-    private int id;//id
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    private  String owner;//拥有者
+
+    private int id;//商品id
 
 }

@@ -70,4 +70,12 @@ public class UserDAOImpl implements userDAO {
 
         return object;
     }
+
+    @Override
+    public int getCount() {
+        String collectionName = "users";
+        MongoCollection<Document> collection = MongoDB.getCollection(collectionName);
+
+        return (int) collection.count();
+    }
 }
