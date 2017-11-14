@@ -49,9 +49,10 @@ public class UserCtrl {
         Map<String, Object> res = new HashMap<String, Object>();
         UserService userService = new UserService();
         Message message = userService.login(user);
-        res = Message.messageToMap(message);
+        res = message.toMap();
         if (message.getStatus()) {
             session.setAttribute("logged", true);
+            session.setAttribute("username",user.getUsername());
         }
 
         return res;
@@ -65,13 +66,22 @@ public class UserCtrl {
 
         UserService userService = new UserService();
         Message message = userService.createOne(user);
-        res = Message.messageToMap(message);
+        res = message.toMap();
         if (message.getStatus()) {
             //注册成功默认登录
             session.setAttribute("logged", true);
         }
 
         return res;
+    }
+
+    @RequestMapping(value = "/logged",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean getLogged(HttpSession session){
+        if(session.getAttribute("logged")==null){
+            return false;
+        }
+        return (boolean)session.getAttribute("logged");
     }
 
 //    @RequestMapping(value = "/buy")

@@ -28,6 +28,13 @@ public class Message {
         System.out.println("status:"+status+",msg:"+msg);
     }
 
+    public Map<String,Object>toMap(){
+        Map<String, Object>map=new HashMap<String,Object>();
+        map.put("status",this.getStatus());
+        map.put("msg",this.getMsg());
+        return  map;
+    };
+
     public static Map<String, Object>messageToMap(Message message){
         Map<String, Object>map=new HashMap<String,Object>();
         map.put("status",message.getStatus());
